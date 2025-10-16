@@ -1,0 +1,81 @@
+<!-- src/app/dashboard/components/sidebar/sidebar.component.html -->
+<aside class="sidebar" *ngIf="(authService.authState$ | async) as s">
+  <!-- sólo mostrar si está logueado -->
+  <ng-container *ngIf="s.isLoggedIn">
+
+    <div class="sidebar-header">
+      <span class="sidebar-title">FarmaPanel</span>
+    </div>
+
+    <nav class="sidebar-nav" aria-label="Menú principal">
+      <a routerLink="/dashboard/main" class="sidebar-link" routerLinkActive="active">
+        <span class="icon">
+          <!-- Home icon -->
+          <svg width="20" height="20" fill="none"><path d="M3 9.5L10 4l7 5.5V16a1 1 0 0 1-1 1h-3v-4H7v4H4a1 1 0 0 1-1-1V9.5Z" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        Dashboard
+      </a>
+
+      <div class="sidebar-group">
+        <button class="sidebar-link group-toggle" type="button" (click)="gestionOpen = !gestionOpen" [attr.aria-expanded]="gestionOpen">
+          <span class="icon">
+            <svg width="20" height="20" fill="none"><path d="M4 4h12v4H4V4Zm0 6h12v6H4v-6Z" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          Gestión
+          <svg class="chevron" [class.rotate]="gestionOpen" width="18" height="18" fill="none" viewBox="0 0 24 24">
+            <path d="M9 5l7 7-7 7" stroke="#49739c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <div class="sidebar-subgroup" [class.open]="gestionOpen">
+          <a routerLink="/dashboard/gestion/categorias" class="sidebar-sublink" routerLinkActive="active">Categorías</a>
+          <a routerLink="/dashboard/gestion/clientes" class="sidebar-sublink" routerLinkActive="active">Clientes</a>
+          <a routerLink="/dashboard/gestion/compras" class="sidebar-sublink" routerLinkActive="active">Compras</a>
+          <a routerLink="/dashboard/gestion/detalle-compras" class="sidebar-sublink" routerLinkActive="active">Detalle Compras</a>
+          <a routerLink="/dashboard/gestion/detalle-ventas" class="sidebar-sublink" routerLinkActive="active">Detalle Ventas</a>
+          <a routerLink="/dashboard/gestion/empleados" class="sidebar-sublink" routerLinkActive="active">Empleados</a>
+          <a routerLink="/dashboard/gestion/productos" class="sidebar-sublink" routerLinkActive="active">Productos</a>
+          <a routerLink="/dashboard/gestion/proveedores" class="sidebar-sublink" routerLinkActive="active">Proveedores</a>
+          <a routerLink="/dashboard/gestion/ventas" class="sidebar-sublink" routerLinkActive="active">Ventas</a>
+        </div>
+      </div>
+
+      <div class="sidebar-separator"></div>
+
+      <a routerLink="/dashboard/nueva_venta" class="sidebar-link" routerLinkActive="active">
+        <span class="icon"><svg width="20" height="20" fill="none"><circle cx="10" cy="10" r="8" stroke="#2563eb" stroke-width="2"/><path d="M6 10h8M10 6v8" stroke="#2563eb" stroke-width="2"/></svg></span>
+        Nueva Venta
+      </a>
+
+      <a routerLink="/dashboard/nueva_compra" class="sidebar-link" routerLinkActive="active">
+        <span class="icon"><svg width="20" height="20" fill="none"><rect x="4" y="4" width="12" height="12" rx="2" stroke="#2563eb" stroke-width="2"/></svg></span>
+        Nueva Producto
+      </a>
+
+      <a routerLink="/dashboard/atencion" class="sidebar-link" routerLinkActive="active">
+        <span class="icon"><svg width="20" height="20" fill="none"><circle cx="10" cy="10" r="8" stroke="#2563eb" stroke-width="2"/><path d="M10 14v-4M10 6h.01" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/></svg></span>
+        Atención
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <!-- Mostrar info de usuario (si existe). usamos "s.user as user" para que el compilador lo entienda. -->
+      <ng-container *ngIf="s.user as user">
+        <div class="sidebar-user">
+          <div class="user-info">
+            <div class="user-name">{{ user.username || 'Usuario' }}</div>
+            <div class="user-role" *ngIf="user.role">{{ user.role }}</div>
+          </div>
+        </div>
+      </ng-container>
+
+      <button class="logout-btn" (click)="logout()" aria-label="Cerrar sesión">
+        <span class="icon" aria-hidden="true">
+          <svg width="20" height="20" fill="none"><path d="M10 17v-1a4 4 0 0 1 4-4h2m-6-8v1a4 4 0 0 0 4 4h2m-10 7h10" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        Cerrar sesión
+      </button>
+    </div>
+
+  </ng-container>
+</aside>
